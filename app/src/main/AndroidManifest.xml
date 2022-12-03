@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tridiv.tridivroymisltest">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TridivRoyMISLTesT">
         <activity
-            android:name=".presenter.view.TvDetailsActivity"
+            android:name=".presenter.view.activities.TvDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".presenter.view.TvListActivity"
+            android:name=".presenter.view.activities.TvListActivity"
             android:exported="false" />
         <activity
-            android:name=".presenter.view.SplashActivity"
+            android:name=".presenter.view.activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="40dp">
+
+    <ImageView
+        android:id="@+id/television_iv"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_glory_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/television_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@id/television_iv"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Samsung Crystal 4K UHD Smart TV" />
+
+    <TextView
+        android:id="@+id/model_tv"
+        android:layout_width="203dp"
+        android:layout_height="17dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@id/television_title_tv"
+        app:layout_constraintTop_toBottomOf="@id/television_title_tv"
+        tools:text="Model : UA43AU7500RSER" />
+
+    <TextView
+        android:id="@+id/price_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/model_tv"
+        app:layout_constraintTop_toBottomOf="@id/model_tv"
+        tools:text="Price: 51900Tk" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

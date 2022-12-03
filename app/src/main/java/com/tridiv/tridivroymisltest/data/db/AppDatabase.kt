@@ -1,11 +1,15 @@
 package com.tridiv.tridivroymisltest.data.db
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import kotlinx.coroutines.internal.synchronized
+import com.tridiv.tridivroymisltest.data.model.TvDaoItem
 
+@Database(entities = [TvDaoItem::class], version = 1)
 abstract class AppDatabase :RoomDatabase() {
+    abstract fun getTvDao(): TvDataDao
+
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
@@ -14,10 +18,10 @@ abstract class AppDatabase :RoomDatabase() {
             val tempInstance = INSTANCE
             if (tempInstance != null) return tempInstance
 
-            synchronized(this) {
+            kotlin.synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext, AppDatabase::class.java, "device-tracker-db"
-                ).build()
+                    context.applicationContext, AppDatabase::class.java, "tv-info-db"
+                ).allowMainThreadQueries().build()
                 INSTANCE = instance
                 return instance
             }
