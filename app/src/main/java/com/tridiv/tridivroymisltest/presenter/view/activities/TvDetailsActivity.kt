@@ -22,8 +22,24 @@ class TvDetailsActivity : AppCompatActivity() {
 
     private fun registerObservers() {
         viewModel.tvDetailsDataResponse.observe(this) {
-            Picasso.get().load(it?.imageUrl)
-                .into(binding.tvImage)
+            with(binding){
+                Picasso.get().load(it?.imageUrl)
+                    .into(tvImage)
+
+                titleTv.text = it?.title?:"-"
+                modelTv.text = modelTv.text.toString().plus(it?.model?:"-")
+                tvPrice.text = tvPrice.text.toString().plus(it?.price).plus(" Tk")
+                tvDescriptionVal.text = it?.description?:"-"
+                tvScreen.text = tvScreen.text.toString().plus(it?.specification?.display?.screenSize?:"-")
+                tvResolution.text = tvResolution.text.toString().plus(it?.specification?.oS?.operatingSystem?:"-")
+                tvType.text = tvType.text.toString().plus(it?.specification?.productType?.productType?:"-")
+                tvDimension.text = tvDimension.text.toString().plus(it?.specification?.dimensionsMm?.setSizeWithStandWxHxD?:"-")
+                tvPqi.text = tvPqi.text.toString().plus(it?.specification?.video?.pQIPictureQualityIndex?:"-")
+                tvHdr.text = tvHdr.text.toString().plus(it?.specification?.video?.hDRHighDynamicRange?:"-")
+                tvContrast.text = tvContrast.text.toString().plus(it?.specification?.video?.contrast?:"-")
+                tvContrastEnhancer.text = tvContrastEnhancer.text.toString().plus(it?.specification?.video?.contrastEnhancer?:"-")
+            }
+
         }
     }
 }

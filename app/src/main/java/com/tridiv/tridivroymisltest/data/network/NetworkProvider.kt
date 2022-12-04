@@ -1,5 +1,10 @@
 package com.tridiv.tridivroymisltest.data.network
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
+import android.os.Build
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
@@ -14,26 +19,6 @@ import java.util.concurrent.Executors
 
 
 class NetworkProvider {
-
-
-//
-//    val interceptor = HttpLoggingInterceptor()
-//    var client: OkHttpClient = OkHttpClient.Builder()
-//        .addInterceptor(interceptor)
-//
-//        .build()
-//
-//    var retrofitApi: Retrofit = Retrofit.Builder()
-//        .baseUrl(baseUrl)
-//        .client(client)
-//        .addConverterFactory(
-//            MoshiConverterFactory.create(
-//                Moshi
-//                    .Builder()
-//                    .build()
-//            )
-//        )
-//        .build()
 
     private val moshi: Moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 

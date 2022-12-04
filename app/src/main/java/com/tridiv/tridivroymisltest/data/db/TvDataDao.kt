@@ -9,7 +9,7 @@ import com.tridiv.tridivroymisltest.data.model.TvDaoItem
 @Dao
 interface TvDataDao {
     @Query("select * from TvDaoItem where page = :pageNo")
-    fun getAllTelevisionLiveData(pageNo: String): LiveData<TvDaoItem>
+    fun getAllTelevisionLiveData(pageNo: String): LiveData<List<TvDaoItem>>
 
     @Query("select * from TvDaoItem")
     fun getAllTelevisionData(): List<TvDaoItem>

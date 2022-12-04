@@ -51,6 +51,9 @@ class TvListDetailsViewModel() : ViewModel() {
         }
     }
 
+    //    val pageNoLiveData = MutableLiveData<Int>()
+    val pageNoLiveData = ArrayList<Int>()
+
 
     private fun sortingDataForDaoPagination(
         context: Context,
@@ -60,27 +63,45 @@ class TvListDetailsViewModel() : ViewModel() {
         appData.clearTable()
         var counter = 0
         var pageNo = 1
-
+        pageNoLiveData.add(pageNo)
         for (item in list) {
-            appData.addTelevisionData(
-                TvDaoItem(
-                    pageNo.toString(),
-                    item.id ?: -1,
-                    item.imageUrl ?: "",
-                    item.name ?: "",
-                    item.model ?: "",
-                    item.size.toString(),
-                    item.price.toString()
-                )
-            )
             if (counter == 5) {
                 counter = 0
                 pageNo++
+                appData.addTelevisionData(
+                    TvDaoItem(
+                        pageNo.toString(),
+                        item.id ?: -1,
+                        item.imageUrl ?: "",
+                        item.name ?: "",
+                        item.model ?: "",
+                        item.size.toString(),
+                        item.price.toString()
+                    )
+                )
+                pageNoLiveData.add(pageNo)
             } else {
+                appData.addTelevisionData(
+                    TvDaoItem(
+                        pageNo.toString(),
+                        item.id ?: -1,
+                        item.imageUrl ?: "",
+                        item.name ?: "",
+                        item.model ?: "",
+                        item.size.toString(),
+                        item.price.toString()
+                    )
+                )
                 counter++
             }
 
         }
+        println("------------------------ 2 "+pageNoLiveData.size)
+    }
+
+    fun clearTable(context: Context) {
+        val appData = AppDatabase.getDB(context).getTvDao()
+        appData.clearTable()
     }
 
 //    fun getTvDataFromDb(context: Context): MutableList<TvDaoItem>{

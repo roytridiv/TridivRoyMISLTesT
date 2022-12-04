@@ -14,10 +14,21 @@
         android:divider="@null"
         android:dividerHeight="0px"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/tv_list_item_layout" />
+
+    <include
+        android:id="@+id/button_bar"
+        layout="@layout/button_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_list_rv"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

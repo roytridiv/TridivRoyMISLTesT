@@ -1,29 +1,22 @@
 package com.tridiv.tridivroymisltest.presenter.view.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tridiv.tridivroymisltest.data.db.AppDatabase
 import com.tridiv.tridivroymisltest.data.model.TvDaoItem
-import com.tridiv.tridivroymisltest.databinding.ActivityMainBinding
 import com.tridiv.tridivroymisltest.databinding.ActivityTvListBinding
-import com.tridiv.tridivroymisltest.presenter.model.TvData
 import com.tridiv.tridivroymisltest.presenter.view.adapters.TvListAdapter
 import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
     private val binding by lazy { ActivityTvListBinding.inflate(layoutInflater) }
 
     private val appDB by lazy { AppDatabase.getDB(this@TvListActivity).getTvDao() }
     private val viewModel by viewModels<TvListDetailsViewModel>()
-    var tvListResp: MutableList<TvDaoItem> = mutableListOf()
+    private var tvListResp: MutableList<TvDaoItem> = mutableListOf()
     private val tvListAdapter by lazy {
         TvListAdapter(
             tvListResp,
@@ -31,20 +24,59 @@ class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
         )
     }
     private val linearLayoutManager by lazy { LinearLayoutManager(this) }
-
-
+    private var currentPage: Int = 0
+    var pageList = ArrayList<Int>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        tvListResp = appDB.getAllTelevisionData().toMutableList()
+        val myList = intent.extras?.getSerializable("page_list") as ArrayList<*>?
+        pageList = myList as ArrayList<Int>
 
-        binding.tvListRv.layoutManager = linearLayoutManager
-        binding.tvListRv.adapter = tvListAdapter
+//        myList?.get(currentPage).toString()
+        initUi()
+
+        checkPageTransition(pageList)
+
+
         registerObserver()
     }
 
     private fun registerObserver() {
 //viewModel.tvListDataResponse.observe()
+    }
+
+    private fun initUi() {
+        binding.tvListRv.layoutManager = linearLayoutManager
+        binding.tvListRv.adapter = tvListAdapter
+        binding.buttonBar.left.setOnClickListener {
+            if(currentPage > 0) currentPage--
+            checkPageTransition(pageList)
+        }
+        binding.buttonBar.right.setOnClickListener {
+            if(currentPage < pageList.size) currentPage++
+            checkPageTransition(pageList)
+        }
+    }
+
+
+    private fun checkPageTransition(pageList: ArrayList<Int>) {
+        appDB.getAllTelevisionLiveData(pageList.get(currentPage).toString()).observe(this) {
+            if(tvListResp.isNotEmpty())tvListResp.clear()
+            tvListResp.addAll(it.toMutableList())
+            tvListAdapter.notifyDataSetChanged()
+            if (currentPage >= pageList.size-1) {
+                binding.buttonBar.right.isEnabled = false
+                binding.buttonBar.right.isClickable = false
+                binding.buttonBar.left.isEnabled = true
+                binding.buttonBar.left.isClickable = true
+            } else if (currentPage <= 0) {
+                binding.buttonBar.left.isEnabled = false
+                binding.buttonBar.left.isClickable = false
+                binding.buttonBar.right.isEnabled = true
+                binding.buttonBar.right.isClickable = true
+            }
+        }
+
     }
 
     override fun onItemClick(Position: Int, tvData: TvDaoItem) {
@@ -55,6 +87,7 @@ class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
 
     override fun onBackPressed() {
         super.onBackPressed()
+        appDB.clearTable()
         finishAffinity()
     }
 }
