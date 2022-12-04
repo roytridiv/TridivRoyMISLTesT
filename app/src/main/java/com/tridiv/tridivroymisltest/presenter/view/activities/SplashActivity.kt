@@ -1,6 +1,9 @@
 package com.tridiv.tridivroymisltest.presenter.view.activities
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -13,6 +16,7 @@ import android.widget.Toast
 import com.tridiv.tridivroymisltest.databinding.ActivityMainBinding
 import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.tridiv.tridivroymisltest.R
 import com.tridiv.tridivroymisltest.data.db.AppDatabase
@@ -23,7 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<TvListDetailsViewModel>()
 
@@ -33,7 +37,14 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         if(!isNetworkAvailable()){
             binding.logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
-            Toast.makeText(this,"No Internet", Toast.LENGTH_LONG).show()
+            AlertDialog.Builder(this)
+                .setTitle("No Internet!")
+                .setMessage("Please check your internet connection and try again.")
+                .setPositiveButton("OK") { _: DialogInterface?, i: Int ->
+                    finishAffinity()
+                }
+                .create()
+                .show()
         }else{
             binding.logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.pulse))
             lifecycleScope.launch(Dispatchers.IO) {
@@ -50,36 +61,5 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNetworkAvailable(): Boolean {
-        try {
-            val connectivityManager: ConnectivityManager =
-                this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                val capabilities =
-                    connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) as NetworkCapabilities
-                when {
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                        return true
-                    }
-                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                        return true
-                    }
-                }
-            } else {
-                try {
-                    val activeNetworkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
-                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
-                        return true
-                    }
-                } catch (exception: Exception) {
-                }
-            }
-            return false
-        } catch (e: Exception) {
-            return false
-        }
-    }
+
 }

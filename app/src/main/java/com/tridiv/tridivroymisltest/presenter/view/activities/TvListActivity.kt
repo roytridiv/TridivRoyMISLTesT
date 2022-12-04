@@ -64,6 +64,7 @@ class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
             if(tvListResp.isNotEmpty())tvListResp.clear()
             tvListResp.addAll(it.toMutableList())
             tvListAdapter.notifyDataSetChanged()
+            binding.buttonBar.pageTv.text = "Page ".plus(pageList.get(currentPage))
             if (currentPage >= pageList.size-1) {
                 binding.buttonBar.right.isEnabled = false
                 binding.buttonBar.right.isClickable = false

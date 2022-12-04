@@ -38,16 +38,19 @@ class TvListDetailsViewModel() : ViewModel() {
     }
 
     var tvDetailsDataResponse = MutableLiveData<TvDetailsResponseBody?>()
-
+    var apiLoading: MutableLiveData<Boolean> = MutableLiveData()
     fun getTvDetails(id: Int) {
+        apiLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getTvDetails(id)
                 tvDetailsDataResponse.postValue(response)
+                apiLoading.postValue(true)
 
             } catch (e: Exception) {
-
+                apiLoading.postValue(true)
             }
+            apiLoading.postValue(true)
         }
     }
 
@@ -96,7 +99,6 @@ class TvListDetailsViewModel() : ViewModel() {
             }
 
         }
-        println("------------------------ 2 "+pageNoLiveData.size)
     }
 
     fun clearTable(context: Context) {
@@ -104,12 +106,7 @@ class TvListDetailsViewModel() : ViewModel() {
         appData.clearTable()
     }
 
-//    fun getTvDataFromDb(context: Context): MutableList<TvDaoItem>{
-//        val appData = AppDatabase.getDB(context).getTvDao()
-//        withContext(Dispatchers.IO){
-//            appData.getAllTelevisionData()
-//        }
-//    }
+
 
     fun createDummyTvList(): MutableList<TvData> {
         return mutableListOf(

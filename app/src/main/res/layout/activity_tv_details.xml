@@ -36,7 +36,6 @@
                 android:id="@+id/title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:text="-"
                 android:textColor="@color/black"
                 android:textSize="30sp"
@@ -49,7 +48,6 @@
                 android:id="@+id/model_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:text="Model: "
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -61,7 +59,6 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:text="Price: "
                 android:textColor="@color/red"
                 android:textSize="32sp"
@@ -90,7 +87,7 @@
                 android:layout_marginTop="5sp"
                 android:text="-"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_description" />
 
@@ -274,6 +271,24 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_usb" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <View
+        android:id="@+id/white_bg"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!--    <TextView-->
     <!--        android:id="@+id/tv_title"-->
     <!--        android:layout_width="wrap_content"-->
