@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tridiv.tridivroymisltest.R
 import com.tridiv.tridivroymisltest.data.db.AppDatabase
 import com.tridiv.tridivroymisltest.data.model.TvDaoItem
 import com.tridiv.tridivroymisltest.data.repository.Repository
@@ -73,11 +74,22 @@ class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
                         binding.buttonBar.right.isClickable = false
                         binding.buttonBar.left.isEnabled = true
                         binding.buttonBar.left.isClickable = true
+                        binding.buttonBar.right.setBackgroundResource(R.drawable.circular_bg_dis)
+                        binding.buttonBar.left.setBackgroundResource(R.drawable.circular_bg)
                     } else if (currentPage <= 0) {
                         binding.buttonBar.left.isEnabled = false
                         binding.buttonBar.left.isClickable = false
                         binding.buttonBar.right.isEnabled = true
                         binding.buttonBar.right.isClickable = true
+                        binding.buttonBar.left.setBackgroundResource(R.drawable.circular_bg_dis)
+                        binding.buttonBar.right.setBackgroundResource(R.drawable.circular_bg)
+                    }else{
+                        binding.buttonBar.left.isEnabled = true
+                        binding.buttonBar.left.isClickable = true
+                        binding.buttonBar.right.isEnabled = true
+                        binding.buttonBar.right.isClickable = true
+                        binding.buttonBar.left.setBackgroundResource(R.drawable.circular_bg)
+                        binding.buttonBar.right.setBackgroundResource(R.drawable.circular_bg)
                     }
                 }
         }
