@@ -35,8 +35,8 @@ class DataModule {
     @Provides
     fun providesAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        AppDatabase::class.java, "gm-db"
-    ).build()
+        AppDatabase::class.java, "tv-info-db"
+    ).allowMainThreadQueries().build()
 
     @Singleton
     @Provides

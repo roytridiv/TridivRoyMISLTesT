@@ -12,8 +12,9 @@ import com.tridiv.tridivroymisltest.R
 import com.tridiv.tridivroymisltest.databinding.ActivityTvDetailsBinding
 import com.tridiv.tridivroymisltest.databinding.ActivityTvListBinding
 import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class TvDetailsActivity : BaseActivity() {
     private val viewModel by viewModels<TvListDetailsViewModel>()
     private val binding by lazy { ActivityTvDetailsBinding.inflate(layoutInflater) }
@@ -73,6 +74,17 @@ class TvDetailsActivity : BaseActivity() {
                 tvHdmi.text =
                     tvHdmi.text.toString().plus(it?.specification?.connectivity?.hDMI ?: "-")
                 tvUsb.text = tvUsb.text.toString().plus(it?.specification?.connectivity?.uSB ?: "-")
+                tvMirroring.text = tvMirroring.text.toString().plus(it?.specification?.smartFeature?.mobileToTVMirroringDLNA?:"-")
+                tvSoundToMobile.text = tvSoundToMobile.text.toString().plus(it?.specification?.smartFeature?.tVSoundToMobile?:"-")
+                tvSoundMirroring.text = tvSoundMirroring.text.toString().plus(it?.specification?.smartFeature?.soundMirroring?:"-")
+
+                tvSeries.text = tvSeries.text.toString().plus(it?.specification?.others?.series?:"-")
+                tvMicroDiming.text = tvMicroDiming.text.toString().plus(it?.specification?.others?.microDimming?:"-")
+                tvQSymphony.text = tvQSymphony.text.toString().plus(it?.specification?.others?.qSymphony?:"-")
+                tvWebBrowser.text = tvWebBrowser.text.toString().plus(it?.specification?.others?.webBrowser?:"-")
+                tvDesign.text = tvDesign.text.toString().plus(it?.specification?.others?.design?:"-")
+                tvBezelType.text = tvBezelType.text.toString().plus(it?.specification?.others?.bezelType?:"-")
+                tvPowerSupply.text =tvPowerSupply.text.toString().plus(it?.specification?.others?.powerSupply?:"-")
                 tvPower.text = tvPower.text.toString()
                     .plus(it?.specification?.power?.powerConsumptionMax ?: "-")
                 progressBar.visibility = View.GONE
@@ -82,14 +94,5 @@ class TvDetailsActivity : BaseActivity() {
 
         }
 
-        viewModel.apiLoading.observe(this) {
-            with(binding) {
-                if (it == true) {
-
-                } else {
-
-                }
-            }
-        }
     }
 }

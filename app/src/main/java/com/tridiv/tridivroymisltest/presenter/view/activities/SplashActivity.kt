@@ -11,7 +11,6 @@ import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.tridiv.tridivroymisltest.R
-import com.tridiv.tridivroymisltest.domain.CommonUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -44,7 +43,6 @@ class SplashActivity : BaseActivity() {
                 delay(5000L)
                 withContext(Dispatchers.Main) {
                     val test = viewModel.pageNoLiveData
-                    println("------------------------"+test)
                     val intent = Intent(this@SplashActivity, TvListActivity::class.java)
                     intent.putExtra("page_list", test)
                     startActivity(intent)

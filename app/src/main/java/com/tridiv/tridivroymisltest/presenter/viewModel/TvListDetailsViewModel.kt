@@ -1,6 +1,7 @@
 package com.tridiv.tridivroymisltest.presenter.viewModel
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,25 +21,17 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class TvListDetailsViewModel@Inject constructor(
+class TvListDetailsViewModel @Inject constructor(
     private val repository: Repository,
     @ApplicationContext context: Context,
 ) : ViewModel() {
 
-//    private val restApiProvider = NetworkProvider()
-//    private val repository: RepositoryImplementation =
-//        RepositoryImplementation(restApiProvider.test())
-
-    var tvListDataResponse = MutableLiveData<MutableList<TvListItemsResponseBodyItem>>()
-    var bkashShowSavedAccountError = MutableLiveData<String>()
 
     fun getTvList(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = repository.getTvList()
                 sortingDataForDaoPagination(context, response?.toMutableList() ?: mutableListOf())
-//                tvListDataResponse.postValue(response?.toMutableList())
-
             } catch (e: Exception) {
 
             }
@@ -62,7 +55,7 @@ class TvListDetailsViewModel@Inject constructor(
         }
     }
 
-    //    val pageNoLiveData = MutableLiveData<Int>()
+
     val pageNoLiveData = ArrayList<Int>()
 
 
@@ -70,8 +63,7 @@ class TvListDetailsViewModel@Inject constructor(
         context: Context,
         list: MutableList<TvListItemsResponseBodyItem>
     ) {
-        val appData = AppDatabase.getDB(context).getTvDao()
-        appData.clearTable()
+        repository.clearDb()
         var counter = 0
         var pageNo = 1
         pageNoLiveData.add(pageNo)
@@ -79,7 +71,7 @@ class TvListDetailsViewModel@Inject constructor(
             if (counter == 5) {
                 counter = 0
                 pageNo++
-                appData.addTelevisionData(
+                repository.insertTvData(
                     TvDaoItem(
                         pageNo.toString(),
                         item.id ?: -1,
@@ -92,7 +84,7 @@ class TvListDetailsViewModel@Inject constructor(
                 )
                 pageNoLiveData.add(pageNo)
             } else {
-                appData.addTelevisionData(
+                repository.insertTvData(
                     TvDaoItem(
                         pageNo.toString(),
                         item.id ?: -1,
@@ -109,35 +101,4 @@ class TvListDetailsViewModel@Inject constructor(
         }
     }
 
-    fun clearTable(context: Context) {
-        val appData = AppDatabase.getDB(context).getTvDao()
-        appData.clearTable()
-    }
-
-
-
-    fun createDummyTvList(): MutableList<TvData> {
-        return mutableListOf(
-            TvData(
-                1,
-                "https://transcomdigital.com/_next/image?url=https%3A%2F%2Ftranscom-storage.s3.amazonaws.com%2F2eb459e3-036e-4c2f-ac2a-2a2039c4a351%2Fddd04b35-531a-4fe0-bc10-d4103d6bf2a6%2Fimages%2Fe60a0107-2116-486f-a7ed-551b045f7b8a&w=1500&q=100",
-                "sony", "asdfgj", "44", "98765"
-            ),
-            TvData(
-                2,
-                "https://transcomdigital.com/_next/image?url=https%3A%2F%2Ftranscom-storage.s3.amazonaws.com%2F2eb459e3-036e-4c2f-ac2a-2a2039c4a351%2Fddd04b35-531a-4fe0-bc10-d4103d6bf2a6%2Fimages%2Fe60a0107-2116-486f-a7ed-551b045f7b8a&w=1500&q=100",
-                "LG", "asdfgj", "44", "98765"
-            ),
-            TvData(
-                3,
-                "https://transcomdigital.com/_next/image?url=https%3A%2F%2Ftranscom-storage.s3.amazonaws.com%2F2eb459e3-036e-4c2f-ac2a-2a2039c4a351%2Fddd04b35-531a-4fe0-bc10-d4103d6bf2a6%2Fimages%2Fe60a0107-2116-486f-a7ed-551b045f7b8a&w=1500&q=100",
-                "walton", "asdfgj", "44", "98765"
-            ),
-            TvData(
-                4,
-                "https://transcomdigital.com/_next/image?url=https%3A%2F%2Ftranscom-storage.s3.amazonaws.com%2F2eb459e3-036e-4c2f-ac2a-2a2039c4a351%2Fddd04b35-531a-4fe0-bc10-d4103d6bf2a6%2Fimages%2Fe60a0107-2116-486f-a7ed-551b045f7b8a&w=1500&q=100",
-                "toshiba", "asdfgj", "44", "98765"
-            ),
-        )
-    }
 }

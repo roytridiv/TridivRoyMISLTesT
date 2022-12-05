@@ -1,11 +1,9 @@
 package com.tridiv.tridivroymisltest.data.network
 
-import com.tridiv.tridivroymisltest.data.model.networkPojo.BaseResponse
+
 import com.tridiv.tridivroymisltest.data.model.networkPojo.TvDetails.TvDetailsResponseBody
 import com.tridiv.tridivroymisltest.data.model.networkPojo.TvDetailsReqBody
-import com.tridiv.tridivroymisltest.data.model.networkPojo.TvListItems.TvListItemsResponseBody
 import com.tridiv.tridivroymisltest.data.model.networkPojo.TvListItems.TvListItemsResponseBodyItem
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
