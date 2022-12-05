@@ -10,7 +10,9 @@ import com.tridiv.tridivroymisltest.data.model.TvDaoItem
 import com.tridiv.tridivroymisltest.databinding.ActivityTvListBinding
 import com.tridiv.tridivroymisltest.presenter.view.adapters.TvListAdapter
 import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TvListActivity : AppCompatActivity(), TvListAdapter.OnItemClickListener {
     private val binding by lazy { ActivityTvListBinding.inflate(layoutInflater) }
 

@@ -1,32 +1,24 @@
 package com.tridiv.tridivroymisltest.presenter.view.activities
 
-import android.Manifest
+
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.net.NetworkInfo
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import com.tridiv.tridivroymisltest.databinding.ActivityMainBinding
 import com.tridiv.tridivroymisltest.presenter.viewModel.TvListDetailsViewModel
 import androidx.activity.viewModels
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.tridiv.tridivroymisltest.R
-import com.tridiv.tridivroymisltest.data.db.AppDatabase
-import com.tridiv.tridivroymisltest.data.model.TvDaoItem
-import com.tridiv.tridivroymisltest.presenter.model.TvData
+import com.tridiv.tridivroymisltest.domain.CommonUseCase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class SplashActivity : BaseActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by viewModels<TvListDetailsViewModel>()

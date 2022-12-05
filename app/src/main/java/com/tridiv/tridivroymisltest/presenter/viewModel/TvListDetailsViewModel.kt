@@ -12,14 +12,22 @@ import com.tridiv.tridivroymisltest.data.model.networkPojo.TvListItems.TvListIte
 import com.tridiv.tridivroymisltest.data.network.NetworkProvider
 import com.tridiv.tridivroymisltest.data.repository.Repository
 import com.tridiv.tridivroymisltest.presenter.model.TvData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TvListDetailsViewModel() : ViewModel() {
-    private val restApiProvider = NetworkProvider()
-    private val repository: RepositoryImplementation =
-        RepositoryImplementation(restApiProvider.test())
+@HiltViewModel
+class TvListDetailsViewModel@Inject constructor(
+    private val repository: Repository,
+    @ApplicationContext context: Context,
+) : ViewModel() {
+
+//    private val restApiProvider = NetworkProvider()
+//    private val repository: RepositoryImplementation =
+//        RepositoryImplementation(restApiProvider.test())
 
     var tvListDataResponse = MutableLiveData<MutableList<TvListItemsResponseBodyItem>>()
     var bkashShowSavedAccountError = MutableLiveData<String>()
